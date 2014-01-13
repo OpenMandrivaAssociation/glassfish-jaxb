@@ -139,7 +139,7 @@ ln -s $(build-classpath relaxngDatatype) tools/lib/rebundle/runtime/relaxngDatat
 ln -s $(build-classpath istack-commons-runtime) tools/lib/rebundle/runtime2/istack-commons-runtime.jar
 ln -s $(build-classpath txw2) tools/lib/rebundle/runtime2/txw2.jar
 ln -s $(build-classpath jaxb-api) tools/lib/redist/jaxb-api.jar
-ln -s $(build-classpath FastInfoset) tools/lib/util/FastInfoset.jar
+ln -s $(build-classpath glassfish-fastinfoset) tools/lib/util/FastInfoset.jar
 ln -s $(build-classpath args4j) tools/lib/util/args4j.jar
 ln -s $(build-classpath codemodel-annotation-compiler) tools/lib/util/codemodel-annotation-compiler.jar
 ln -s $(build-classpath dom4j) tools/lib/util/dom4j.jar
