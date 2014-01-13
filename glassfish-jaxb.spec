@@ -1,4 +1,4 @@
-%_javapackages_macros
+%{?_javapackages_macros:%_javapackages_macros}
 Name: glassfish-jaxb
 Version: 2.2.5
 Release: 5.0%{?dist}
@@ -139,11 +139,7 @@ ln -s $(build-classpath relaxngDatatype) tools/lib/rebundle/runtime/relaxngDatat
 ln -s $(build-classpath istack-commons-runtime) tools/lib/rebundle/runtime2/istack-commons-runtime.jar
 ln -s $(build-classpath txw2) tools/lib/rebundle/runtime2/txw2.jar
 ln -s $(build-classpath jaxb-api) tools/lib/redist/jaxb-api.jar
-%if 0%{?fredora}
 ln -s $(build-classpath FastInfoset) tools/lib/util/FastInfoset.jar
-%else
-ln -s $(build-classpath glassfish-fastinfoset) tools/lib/util/FastInfoset.jar
-%endif
 ln -s $(build-classpath args4j) tools/lib/util/args4j.jar
 ln -s $(build-classpath codemodel-annotation-compiler) tools/lib/util/codemodel-annotation-compiler.jar
 ln -s $(build-classpath dom4j) tools/lib/util/dom4j.jar
@@ -206,3 +202,34 @@ cp -rp apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 %{_javadocdir}/%{name}
 %doc License.txt
 %doc License.html
+
+
+%changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.5-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
+* Wed Feb 13 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.5-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
+* Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.5-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
+* Tue Mar 13 2012 Juan Hernandez <juan.hernandez@redhat.com> 2.2.5-2
+- Add missing xsom and rngom dependencies to the POM files
+
+* Sat Mar 10 2012 Juan Hernandez <juan.hernandez@redhat.com> 2.2.5-1
+- Updated to upstream version 2.2.5
+- Removed classpath from manifest files
+
+* Wed Mar 7 2012 Juan Hernandez <juan.hernandez@redhat.com> 2.2.4u1-4
+- Updated to reflect the change from glassfish-fi to glassfish-fastinfoset
+
+* Wed Feb 22 2012 Juan Hernandez <juan.hernandez@redhat.com> 2.2.4u1-3
+- Updated to reflect the changes of the jar names in txw2
+
+* Wed Feb 22 2012 Juan Hernandez <juan.hernandez@redhat.com> 2.2.4u1-2
+- Cleanup of the spec file
+
+* Sat Jan 21 2012 Marek Goldmann <mgoldman@redhat.com> 2.2.4u1-1
+- Initial packaging
+
