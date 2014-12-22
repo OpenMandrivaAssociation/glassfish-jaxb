@@ -1,9 +1,9 @@
 %{?_javapackages_macros:%_javapackages_macros}
 Name: glassfish-jaxb
 Version: 2.2.5
-Release: 5.0%{?dist}
+Release: 8.1
 Summary: JAXB Reference Implementation
-
+Group:	Development/Java
 
 License: CDDL and GPLv2 with exceptions
 URL: http://jaxb.java.net
@@ -51,9 +51,12 @@ Patch6: %{name}-dont-use-prebuilt-javadocs.patch
 # Don't build the examples as they need additional dependencies:
 Patch7: %{name}-dont-build-examples.patch
 
+# Fix Java 8 compatibility
+Patch8: %{name}-fix-java8-compatibility.patch
+
 BuildArch: noarch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-local
 BuildRequires: java-devel
 
 BuildRequires: ant
@@ -71,24 +74,6 @@ BuildRequires: stax-ex
 BuildRequires: isorelax
 BuildRequires: xsom
 BuildRequires: rngom
-
-Requires: glassfish-dtd-parser
-Requires: xml-commons-resolver
-Requires: xsom
-Requires: rngom
-Requires: isorelax
-Requires: jing
-Requires: stax-ex
-Requires: glassfish-fastinfoset
-Requires: glassfish-jaxb-api
-Requires: relaxngDatatype
-Requires: txw2
-Requires: relaxngcc
-Requires: istack-commons
-Requires: codemodel
-Requires: jpackage-utils
-Requires: java
-
 
 %description
 GlassFish JAXB Reference Implementation.
@@ -124,6 +109,7 @@ cp %{SOURCE2} jaxb-xjc.pom
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 # Link the libraries where the build script expects them:
 ln -s $(build-classpath codemodel) tools/lib/rebundle/compiler/codemodel.jar
@@ -169,42 +155,32 @@ ant \
 
 %install
 
-# Jar files:
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -m 644 dist/lib/jaxb-impl.jar %{buildroot}%{_javadir}/%{name}/jaxb-impl.jar
-install -m 644 dist/lib/jaxb-xjc.jar %{buildroot}%{_javadir}/%{name}/jaxb-xjc.jar
-install -m 644 tools/pretty-printer/build/pretty-printer.jar %{buildroot}%{_javadir}/%{name}/pretty-printer.jar
-install -m 644 tools/xmllint/build/xmllint.jar %{buildroot}%{_javadir}/%{name}/xmllint.jar
+%mvn_artifact jaxb-impl.pom dist/lib/jaxb-impl.jar
+%mvn_artifact jaxb-xjc.pom dist/lib/jaxb-xjc.jar
 
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -m 644 jaxb-impl.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-jaxb-impl.pom
-install -m 644 jaxb-xjc.pom  %{buildroot}%{_mavenpomdir}/JPP.%{name}-jaxb-xjc.pom
+%mvn_install -J apidocs/
 
-# Javadoc files:
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
-
-# Dependencies map:
-%add_maven_depmap JPP.%{name}-jaxb-impl.pom %{name}/jaxb-impl.jar
-%add_maven_depmap JPP.%{name}-jaxb-xjc.pom %{name}/jaxb-xjc.jar
-
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
 %doc License.txt
 %doc License.html
 
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc License.txt
 %doc License.html
 
 
 %changelog
+* Mon Oct 27 2014 Michal Srb <msrb@redhat.com> - 2.2.5-8
+- Fix FTBFS (Resolves: rhbz#1106636)
+- Adapt to current packaging guidelines
+- Remove R, add BR: javapackages-local (for %%mvn_artifact macro)
+
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.5-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
+* Fri Mar 28 2014 Michael Simacek <msimacek@redhat.com> - 2.2.5-6
+- Use Requires: java-headless rebuild (#1067528)
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.5-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 

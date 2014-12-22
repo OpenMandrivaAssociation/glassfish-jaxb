@@ -1,0 +1,43 @@
+diff --git a/xjc/src/com/sun/tools/jxc/model/nav/ApNavigator.java b/xjc/src/com/sun/tools/jxc/model/nav/ApNavigator.java
+index f1d3745..3a16a1c 100644
+--- a/xjc/src/com/sun/tools/jxc/model/nav/ApNavigator.java
++++ b/xjc/src/com/sun/tools/jxc/model/nav/ApNavigator.java
+@@ -47,6 +47,7 @@ import com.sun.xml.bind.v2.model.nav.Navigator;
+ import com.sun.xml.bind.v2.runtime.Location;
+ 
+ import javax.annotation.processing.ProcessingEnvironment;
++import javax.lang.model.element.AnnotationMirror;
+ import javax.lang.model.element.Element;
+ import javax.lang.model.element.ElementKind;
+ import javax.lang.model.element.ExecutableElement;
+@@ -66,6 +67,8 @@ import javax.lang.model.util.ElementFilter;
+ import javax.lang.model.util.Elements;
+ import javax.lang.model.util.SimpleTypeVisitor6;
+ import javax.lang.model.util.Types;
++
++import java.lang.annotation.Annotation;
+ import java.util.Collection;
+ import java.util.HashMap;
+ import java.util.HashSet;
+@@ -387,6 +390,21 @@ public class ApNavigator implements Navigator<TypeMirror, TypeElement, VariableE
+         public TypeKind getKind() {
+             throw new IllegalStateException();
+         }
++
++        @Override
++        public <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass) {
++            throw new IllegalStateException();
++        }
++
++        @Override
++        public <A extends Annotation> A getAnnotation(Class<A> annotationType) {
++            throw new IllegalStateException();
++        }
++
++        @Override
++        public List<? extends AnnotationMirror> getAnnotationMirrors() {
++            throw new IllegalStateException();
++        }
+     };
+ 
+     public Location getClassLocation(TypeElement typeElement) {
