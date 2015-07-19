@@ -1,7 +1,7 @@
 %{?_javapackages_macros:%_javapackages_macros}
 Name: glassfish-jaxb
 Version: 2.2.5
-Release: 8.1
+Release: 8.2
 Summary: JAXB Reference Implementation
 Group:	Development/Java
 
