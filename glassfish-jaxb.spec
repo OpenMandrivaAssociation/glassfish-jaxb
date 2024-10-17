@@ -6,7 +6,7 @@ Summary: JAXB Reference Implementation
 Group:	Development/Java
 
 License: CDDL and GPLv2 with exceptions
-URL: http://jaxb.java.net
+URL: https://jaxb.java.net
 
 # svn export https://svn.java.net/svn/jaxb~version2/tags/jaxb-2_2_5/ glassfish-jaxb-2.2.5
 # find glassfish-jaxb-2.2.5/ -name '*.class' -delete
